@@ -8,21 +8,18 @@ import rigoImage from "../../img/rigo-baby.jpg";
 //create your first component
 
 	const Home = () => {
-	const [lista, setlista] = useState([]);
+	const [lista, setlista] = useState([]); //declaracion de variable "lista, " y "setlista" como funcion para eliminar o agregar
 
 	const agregar = add => {
-    if (event.key === 'Enter' && add.target.value != "") { // agregar  mediante evento 
-        setlista([...lista, add.target.value]);
+    if (event.key === 'Enter' && add.target.value != "") { // agregar  mediante apretar la tecla enter y que se agrege  add con el valor que toma siempre que sea distinto a nada
+        setlista([...lista, add.target.value]); // setlista para agregar mediante la funcion... (concatenacion de lista con el valor que agregamos en el input)
     }
 }
 	const eliminar = (queCosa) => () =>
     setlista((lista) => lista.filter((_, i) => i !== queCosa));
-	const limpiar = (e)=> { 
-		e.setlista();
-		for (let i = 0; i < lista.length; i++) {
-		  lista[i].value='';          
-		}
-	  }
+
+	const limpiar = () =>
+    setlista((lista) => lista.splice());
 	return (
 		
 		<div className="text-center">
@@ -43,7 +40,7 @@ import rigoImage from "../../img/rigo-baby.jpg";
 				  </li>
 			  ))}
 		  </ul>
-		  <button type="reset"  onClick={limpiar}>Limpiar Campos</button>
+		  <button className="btn" onClick={limpiar}>Limpiar </button>
 		  <div className="restantes"> {lista.length} Restantes   </div>
 	  	  </div>
 	      </div>
