@@ -1,82 +1,75 @@
 
-/* 
-
-    You can write your own styles here...
-    
-    a
-    ...Or you can use the import command to include 
-    other sylesheets into your bunde as well, e.j:
-    
-    import 'relative/path/to/stylesheet.scss';
-
-*/
-.icono {
-    right: 40px;
-}
 
 body {
-    background-color: #F9F9F9;
-    font-family: Arial, Helvetica, sans-serif;
+    margin: 0px;
+    background-color: rgb(248, 248, 248);
 }
 
-h1 {
-    color: #EDDFE0;
-    font-size: 90px;
+.container {
+    border-radius: 10px;
+    border: solid 2px rgb(228, 220, 220);
+    min-height: 500px;
+    width: 400px;
+    margin: 40px auto;
+    background: linear-gradient(to bottom right, #33ccff 19%, #99ffcc 72%);
+    padding-bottom: 20px;
 }
 
-.restantes {
-    background-color: gray;
-}
-
-#lista1 {
-    counter-reset: li; 
-    list-style: none; 
-    *list-style: decimal; 
-    font: 15px 'trebuchet MS', 'lucida sans';
-    padding: 0;
-    margin-bottom: 4em;
-    text-shadow: 0 1px 0 rgba(255,255,255,.5);
-}
-
-#lista2 ul {
-    margin: 20px; 
-}
-
-#lista1 li{
-    position: relative;
-    display: block;
-    padding: .4em .4em .4em 2em;
-    *padding: .4em;
-    margin: .5em 0;
-    background: #ddd;
-    color: #444;
-    text-decoration: none;
-    border-radius: .3em;
-    transition: all .3s ease-out;   
-}
-
-#lista1 li:hover{
-    background: #eee;
-}
-
-#lista1 li:hover:before{
-    transform: rotate(360deg);  
-}
-
-#lista1 li:before{
-    content: counter(li);
-    counter-increment: li;
-    position: absolute; 
-    left: 1.3em;
-    top: 50%;
-    margin-top: -1.3em;
-    background: #87ceeb;
-    height: 2em;
-    width: 2em;
-    line-height: 2em;
-    border: .3em solid #fff;
+.title {
+    padding-top: 10px;
     text-align: center;
+}
+
+
+.fas {
+    padding-left: 20px;
+}
+
+
+.divInput {
+    width: 250px;
+    height: 40px;
+    padding-top: 0.75rem;
+    padding-right: 1.25rem;
+    padding-bottom: 0.75rem;
+    padding-left: 1.25rem;
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-bottom-right-radius: 0.25rem;
+    border-bottom-left-radius: 0.25rem;   
+}
+.addTask {
+    margin-left: 1rem;
+}
+.list-group-item {
+    width: 360px;
     font-weight: bold;
-    border-radius: 2em;
-    transition: all .3s ease-out;
+    cursor: pointer;
+}
+
+
+.list-group-item i {
+    color:red;
+    align-content: right;
+    cursor: pointer;
+    opacity: 0;
+}
+
+.list-group-item:hover i {
+    color:red;
+    align-content: right;
+    cursor: pointer;
+    opacity: 1;
+}
+
+.taskCounter {
+    padding-top: 0.75rem;
+    padding-right: 1.25rem;
+    padding-bottom: 0.75rem;
+    font-weight: 500;
+
+}
+
+.length {
+    color: red;
 }

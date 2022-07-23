@@ -8,58 +8,144 @@ import rigoImage from "../../img/rigo-baby.jpg";
 //create your first component
 
 const Home = () => {
-  const [lista, setlista] = useState([]); //declaracion de variable "lista, " y "setlista" como funcion para eliminar o agregar
-  useEffect(() => {
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
+  const [task, setTask] = useState("");
 
-    var raw = JSON.stringify([]);
+  const [editar, setEditar] = useState({index : "", label:""});
 
-    var requestOptions = {
-      method: "GET",
-      redirect: "follow",
-    };
+  const [list, setList] = useState([{ label: "", done: false }]);
 
-    fetch(
-      "https://assets.breatheco.de/apis/fake/todos/user/leoescobarh",
-      requestOptions
-    )
-      .then((response) => response.json())
-      .then((result) => setlista(result))
-      .catch((error) => console.log("error", error));
-  }, []);
-  const agregar = (add) => {
-    if (event.key === "Enter" && add.target.value != "") {
-      // agregar  mediante apretar la tecla enter y que se agrege  add con el valor que toma siempre que sea distinto a nada
-      setlista([...lista, add.target.value]); // setlista para agregar mediante la funcion... (concatenacion de lista con el valor que agregamos en el input)
-    }
+  const handleChange = (event) => {
+    setTask(event.target.value);
   };
-  const eliminar = (queCosa) => () =>
-    setlista((lista) => lista.filter((_, i) => i !== queCosa));
 
-  const limpiar = () => setlista((lista) => lista.splice());
+  const getList = () => {
+    fetch("https://assets.breatheco.de/apis/fake/todos/user/leoescobarh", {
+      method: "GET",
+      headers: {
+        "content-type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((response) => {
+        setList(
+          response.map((item, index) => {
+            return item; //el map siempre debe llevar un  return
+          })
+        );
+      });
+  };
+
+  const updateList = (i) => {
+
+    let editar = list[i];
+    
+    setEditar({label:editar.label, index:i})
+
+
+
+
+
+
+
+
+
+     fetch("https://assets.breatheco.de/apis/fake/todos/user/leoescobarh", {
+       method: "PUT",
+       headers: {
+        "content-type": "application/json",
+       },
+       body: JSON.stringify(list),
+     })
+      .then((response) => {
+        console.log(response);
+      })
+       .catch((err) => {
+       console.log(err);
+       });
+  };
+
+  const handleSubmit = (event) => {
+    if (task.trim() && task.length !== 0) {
+      setList(list.concat({ label: task, done: false }));
+    } else {
+      alert("Tienes que escribir una tarea !");
+    }
+    console.log(list);
+    setTask("");
+    event.preventDefault();
+  };
+
+  const removeTodo = (index) => {
+    const newTodos = [...list];
+    newTodos.splice(index, 1);
+    setList(newTodos);
+  };
+
+  const limpiar = () => setList((task) => task.splice());
+
+  
+
+  useEffect(() => {
+    getList();
+  }, []);
   return (
-    <div className="text-center">
-      <h1 className="text-center">todos</h1>
-      <input
-        type="text"
-        placeholder="What needs to be done?"
-        onKeyPress={agregar}
-      />
+    <div className="container">
+      <h1 className="title">todo list API</h1>
+      
+        <div>
+          <input
+            className="d-inline-block align-middle divInput"
+            type="text"
+           value={editar.label}
+           onChange={e => {
+        
+              setEditar({index: editar.index, label: e.target.value});
+           }}
+            placeholder="Actualizar"
+            
+          />
+          
+          <button  onClick={updateList}  type="submit">
+            Actualizar
+          </button>
 
-      <div className="text-center">
-        <ul id="lista1" className="list-group">
-		{lista?.map((e,i) =>{
-				return<li key={i}>{e.label}</li>
-			})}
-         
-        </ul>
-		
+          <button className="btn btn-primary " type="reset">
+            Cancelar
+          </button>
+          <br></br>
+        </div>
+        <br></br>
+        <form onSubmit={handleSubmit}>
+        <input
+          className="d-inline-block align-middle divInput"
+          type="text"
+          value={task}
+          onChange={handleChange}
+          placeholder="Escriba su siguiente tarea"
+        />
+        <button className="btn btn-primary addTask" type="submit">
+          Agregar
+        </button>
+      </form>
+      <ul className="list-group">
+        {list.map((item, index) => (
+          <li className="list-group-item d-flex" key={index}>
+            {item.label}
+
+            <i onClick={removeTodo} className="far fa-trash-alt ml-auto" />
+
+
+            <i onClick={()=>{updateList(index)}} className="far fa-trash-alt ml-auto" />
+          </li>
+          
+        ))}
         <button className="btn" onClick={limpiar}>
           Limpiar{" "}
         </button>
-        <div className="restantes"> {lista.length} Restantes </div>
-      </div>
+        <div className="taskCounter">
+          Tienes <strong>{list.length} tareas por hacer </strong>
+        </div>
+      </ul>
     </div>
   );
 };
