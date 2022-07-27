@@ -40,15 +40,6 @@ const Home = () => {
     let editar = list[i];
     
     setEditar({label:editar.label, index:i})
-
-
-
-
-
-
-
-
-
      fetch("https://assets.breatheco.de/apis/fake/todos/user/leoescobarh", {
        method: "PUT",
        headers: {
@@ -135,7 +126,7 @@ const Home = () => {
             <i onClick={removeTodo} className="far fa-trash-alt ml-auto" />
 
 
-            <i onClick={()=>{updateList(index)}} className="far fa-trash-alt ml-auto" />
+            <i onClick={()=>{updateList(index)}} className="far fa-edit" />
           </li>
           
         ))}
